@@ -6,8 +6,8 @@ url = 'https://raw.githubusercontent.com/it-ces/Datasets/main/MarketPower.csv'
 df = pd.read_csv(url)
 
 print(df.head())
-# 'CostM' para los costos marginales y una columna 'IMargi' para los ingresos marginales
-df['nivel_optimo'] = df['CostM'] / df['IMargi']
+# 'CM' para los costos marginales y una columna 'IMargi' para los ingresos marginales
+df['nivel_optimo'] = df['CM'] / df['IMargi']
 
 # Ver los resultados
 print(df[['empresa', 'nivel_optimo']])
@@ -18,13 +18,13 @@ df['poder_mercado'] = 1 / abs(df['elasticidad'])
 # Ver los resultados
 print(df[['empresa', 'poder_mercado']])
 # Media de los ingresos marginales
-media_IM = df['IMargi'].mean()
+media_IMargi = df['IMargi'].mean()
 
 # Mediana de los ingresos marginales
-mediana_IM = df['IMargi'].median()
+mediana_IMargi = df['IMargi'].median()
 
 # Moda de los ingresos marginales
-moda_IM = df['IMargi'].mode()
+moda_IMargi = df['IMargi'].mode()
 
 print(f'Media de IMargi: {media_IMargi}')
 print(f'Mediana de IMargi: {mediana_IMargi}')

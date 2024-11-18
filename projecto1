@@ -1,0 +1,47 @@
+pip install pandas requests
+import pandas as pd
+
+# Cargar el archivo CSV 
+url = 'https://raw.githubusercontent.com/it-ces/Datasets/main/MarketPower.csv'
+df = pd.read_csv(url)
+
+print(df.head())
+# 'CostM' para los costos marginales y una columna 'IMargi' para los ingresos marginales
+df['nivel_optimo'] = df['CostM'] / df['IMargi']
+
+# Ver los resultados
+print(df[['empresa', 'nivel_optimo']])
+
+# Asumimos que tienes la elasticidad-precio de la demanda 'elasticidad' y el precio 'precio' en el DataFrame
+df['poder_mercado'] = 1 / abs(df['elasticidad'])
+
+# Ver los resultados
+print(df[['empresa', 'poder_mercado']])
+# Media de los ingresos marginales
+media_IM = df['IMargi'].mean()
+
+# Mediana de los ingresos marginales
+mediana_IM = df['IMargi'].median()
+
+# Moda de los ingresos marginales
+moda_IM = df['IMargi'].mode()
+
+print(f'Media de IMargi: {media_IMargi}')
+print(f'Mediana de IMargi: {mediana_IMargi}')
+print(f'Moda de IMargi: {moda_IMargi}')
+from scipy import stats
+
+# Supón que 'sector' es la columna que contiene los diferentes sectores y 'poder_mercado' es el poder de mercado
+sectores_unicos = df['sector'].unique()
+grupos = [df[df['sector'] == sector]['poder_mercado'] for sector in sectores_unicos]
+
+# ANOVA
+F, p_valor = stats.f_oneway(*grupos)
+
+print(f'Valor F: {F}')
+print(f'Valor p: {p_valor}')
+
+if p_valor < 0.05:
+    print("Existen diferencias significativas entre los sectores.")
+else:
+    print("No existen diferencias significativas entre los sectores.")
